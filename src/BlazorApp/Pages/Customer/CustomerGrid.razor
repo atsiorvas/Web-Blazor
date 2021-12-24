@@ -1,0 +1,48 @@
+﻿@page "/customer"
+
+@using BlazorApp.Data
+@using BlazorApp.Pages.Pager
+@inherits CustomerGridBase
+@namespace BlazorApp.Pages.Customer
+
+<h1>Customers</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (@Customers is null) {
+    <p><em>No data...</em></p>
+} else {
+    <table class="table">
+        <thead>
+            <tr>
+                <th>CompanyName</th>
+                <th>ContactName</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Region</th>
+                <th>PostalCode</th>
+                <th>Country</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in @Customers.Results) {
+                <tr>
+                    <td>@customer.CompanyName</td>
+                    <td>@customer.ContactName</td>
+                    <td>@customer.Address</td>
+                    <td>@customer.City</td>
+                    <td>@customer.Region</td>
+                    <td>@customer.PostalCode</td>
+                    <td>@customer.Country</td>
+                    <td>@customer.Phone</td>
+                    <td>
+                        <a class="btn btn-success" href="customer/edit/@customer.Id">Edit</a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(customer.Id))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <Pager Result=@Customers PageChanged=@PagerPageChanged />
+}
