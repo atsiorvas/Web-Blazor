@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "src\Appl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{C0C5ABD3-EC7E-43D5-8711-8FB9B487A2EE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "src\tests\UnitTests\UnitTests.csproj", "{F48E6D42-A508-41AD-B920-F2FCB871EE64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{C0C5ABD3-EC7E-43D5-8711-8FB9B487A2EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0C5ABD3-EC7E-43D5-8711-8FB9B487A2EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0C5ABD3-EC7E-43D5-8711-8FB9B487A2EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F48E6D42-A508-41AD-B920-F2FCB871EE64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F48E6D42-A508-41AD-B920-F2FCB871EE64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F48E6D42-A508-41AD-B920-F2FCB871EE64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F48E6D42-A508-41AD-B920-F2FCB871EE64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{63D32A29-8112-4140-8169-62F00CDCE511} = {3BAF6D77-94E6-4C24-9A63-D7205476389B}
 		{C0A9BBB3-5122-4231-B264-2A88BAFEB919} = {3BAF6D77-94E6-4C24-9A63-D7205476389B}
 		{C0C5ABD3-EC7E-43D5-8711-8FB9B487A2EE} = {3BAF6D77-94E6-4C24-9A63-D7205476389B}
+		{F48E6D42-A508-41AD-B920-F2FCB871EE64} = {531B3CB5-19CE-4775-9ED8-66B086208EDB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF9C96EA-49E7-431B-83AF-95AF2D293C1E}
