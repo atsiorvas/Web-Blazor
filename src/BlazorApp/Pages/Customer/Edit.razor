@@ -1,0 +1,74 @@
+﻿@page "/customer/edit/"
+@page "/customer/edit/{Id:guid}"
+@inherits EditBase
+
+<h1>@PageTitle</h1>
+
+@if (Customer is null) {
+    <p><em>Loading...</em></p>
+} else {
+    <EditForm Model="@Customer" Context="formContext">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="row">
+            <div class="col-sm-9">
+                <form class="form form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">CompanyName:</label>
+                        <div class="col-sm-7">
+                            <input type="text" @bind=Customer.CompanyName class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">ContactName:</label>
+                        <div class="col-sm-7">
+                            <input type="text" @bind=Customer.ContactName class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Address:</label>
+                        <div class="col-sm-7">
+                            <input type="text" @bind=Customer.Address class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">City:</label>
+                        <div class="col-sm-7">
+                            <input type="text" @bind=Customer.City class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Region:</label>
+                        <div class="col-sm-7">
+                            <input type="text" @bind=Customer.Region class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">PostalCode:</label>
+                        <div class="col-sm-7">
+                            <input type="text" @bind=Customer.PostalCode class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Country:</label>
+                        <div class="col-sm-7">
+                            <input type="text" @bind=Customer.Country class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Phone:</label>
+                        <div class="col-sm-7">
+                            <input type="text" @bind=Customer.Phone class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-7">
+                            <button type="button" class="btn btn-primary" @onclick="SaveAsync">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </EditForm>
+}

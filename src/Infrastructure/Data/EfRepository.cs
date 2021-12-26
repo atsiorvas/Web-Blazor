@@ -23,14 +23,11 @@ namespace BlazorApp.Infrastructure.Data {
                 .AnyAsync();
         }
 
-
         public virtual async Task AddAsync(T entity) {
             await _dbContext.Set<T>().AddAsync(entity);
         }
 
-        public virtual void Update(T entity) {
-            _dbContext.Set<T>().Update(entity);
-        }
+        public virtual void Update(T entity) => _dbContext.Set<T>().Update(entity);
 
         public virtual void Delete(T entity) {
             _dbContext.Set<T>().Remove(entity);
@@ -38,6 +35,10 @@ namespace BlazorApp.Infrastructure.Data {
 
         public virtual async Task<IEnumerable<T>> ListAllAsync(Expression<Func<T, bool>> predicate) {
             return await _dbContext.Set<T>().Where(predicate).ToListAsync();
+        }
+
+        public virtual IQueryable<T> Find(Expression<Func<T, bool>> predicate) {
+            return _dbContext.Set<T>().Where(predicate).AsNoTracking().AsQueryable();
         }
     }
 }

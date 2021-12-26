@@ -1,21 +1,47 @@
-﻿@inherits PagerBase
+﻿<style>
+    .sort-link {
+        cursor: pointer;
+        color: #007bff !important;
+    }
+
+    .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                              supported by Chrome and Opera */
+    }
+</style>
+
+
+@inherits PagerBase
+@using Microsoft.AspNetCore.Components.Web
 
 @if (Result != null) {
     <div class="row">
         <div class="col-md-8 col-sm-8">
             @if (Result.PageCount > 1) {
-                @*<ul class="pagination pull-right">
-                    <li><button onclick="@(() => PagerButtonClicked(1))" class="btn">&laquo;</button></li>
+                var hasNext = Result.CurrentPage < Result.PageCount;
+                var hasPrevious = Result.CurrentPage > 1 && Result.PageCount > 1;
+
+                <ul class="pagination pull-right">
+                    @if (hasPrevious) {
+                        <li><button type="button" @onclick="() => ChangePagerClicked(Result.CurrentPage - 1)" class="btn">Previous</button></li>
+                    }
                     @for (var i = StartIndex; i <= FinishIndex; i++) {
-                    var currentIndex = i;
-                    @if (i == Result.CurrentPage) {
-                    <li><span class="btn">@i</span></li>
-                    } else {
-                    <li><button onclick="@(() => PagerButtonClicked(currentIndex))" class="btn">@i</button></li>
+                        var currentIndex = i;
+                        @if (i == Result.CurrentPage) {
+                            <li><span class="btn btn-primary">@i</span></li>
+                        } else {
+                            <li><button type="button" @onclick="() => ChangePagerClicked(currentIndex)" class="btn">@i</button></li>
+                        }
                     }
+                    @if (hasNext) {
+                        <li><button type="button" @onclick="() => ChangePagerClicked(Result.CurrentPage + 1)" class="btn">Next</button></li>
                     }
-                    <li><button onclick="@(() => PagerButtonClicked(Result.PageCount))" class="btn">&raquo;</button></li>
-                    </ul>*@
+                </ul>
             }
         </div>
     </div>

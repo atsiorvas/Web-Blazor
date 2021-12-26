@@ -1,13 +1,26 @@
 ﻿@page "/customer"
+@page "/customer/{Page}"
 
-@using BlazorApp.Data
 @using BlazorApp.Pages.Pager
 @inherits CustomerGridBase
-@namespace BlazorApp.Pages.Customer
 
 <h1>Customers</h1>
 
-<p>This component demonstrates fetching data from a service.</p>
+<div class="row margin-bottom-20">
+    <div class="col-sm-9">
+        <div class="dataTables_length" id="showPages">
+            <label>
+                Show
+                <select name="example_length" aria-controls="example" class="" @onchange="SelectedPageSizeAsync">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select> entries
+            </label>
+        </div>
+    </div>
+</div>
 
 @if (@Customers is null) {
     <p><em>No data...</em></p>
@@ -23,6 +36,11 @@
                 <th>PostalCode</th>
                 <th>Country</th>
                 <th>Phone</th>
+                <th>
+                    <button type="button" class="btn btn-primary" @onclick="AddNew">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -37,8 +55,12 @@
                     <td>@customer.Country</td>
                     <td>@customer.Phone</td>
                     <td>
-                        <a class="btn btn-success" href="customer/edit/@customer.Id">Edit</a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(customer.Id))">Delete</button>
+                        <a class="btn btn-success" href="customer/edit/@customer.Id">
+                            <i class="fas fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        <button type="button" class="btn btn-danger" @onclick="@(() => Delete(customer.Id))">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
                     </td>
                 </tr>
             }

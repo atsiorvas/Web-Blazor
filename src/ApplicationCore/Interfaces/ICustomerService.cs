@@ -8,5 +8,6 @@ namespace BlazorApp.ApplicationCore.Interfaces {
         Task<CustomerModel> FindCustomerByIdAsync(Guid customerId);
         Task<bool> DeleteCustomerAsync(Guid customerId);
         Task<PagedResult<CustomerModel>> GetCustomerPaginatedAsync(int page, int pageSize);
+        Task<bool> UpdateCustomerAsync(CustomerModel customerModel);
     }
 }

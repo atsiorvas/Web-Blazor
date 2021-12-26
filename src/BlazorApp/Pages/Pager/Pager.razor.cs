@@ -1,6 +1,5 @@
 ﻿using BlazorApp.ApplicationCore.Models;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http.Extensions;
 using System;
 
 namespace BlazorApp.Pages.Pager {
@@ -21,7 +20,7 @@ namespace BlazorApp.Pages.Pager {
             base.OnParametersSet();
         }
 
-        protected void PagerButtonClicked(int page) {
+        protected void ChangePagerClicked(int page) {
             PageChanged?.Invoke(page);
         }
     }

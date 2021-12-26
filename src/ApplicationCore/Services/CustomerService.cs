@@ -3,6 +3,8 @@ using BlazorApp.ApplicationCore.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using BlazorApp.ApplicationCore.Entities;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Services {
 
@@ -13,8 +15,29 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services {
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<bool> UpdateCustomerAsync(CustomerModel customerModel) {
+            if (customerModel == null) {
+                throw new ArgumentNullException(nameof(customerModel));
+            }
+            var customerEntity = await _unitOfWork.CustomerRepository.GetByIdAsync(customerModel.Id);
+            if (customerEntity == null) {
+                return false;
+            }
+            customerEntity.CompanyName = customerModel.CompanyName;
+            customerEntity.City = customerModel.City;
+            customerEntity.Address = customerModel.Address;
+            customerEntity.Phone = customerModel.Phone;
+            customerEntity.ContactName = customerModel.ContactName;
+            customerEntity.Country = customerModel.Country;
+            customerEntity.PostalCode = customerModel.PostalCode;
+            customerEntity.Region = customerModel.Region;
+
+            await _unitOfWork.SaveChangesAsync();
+            return true;
+        }
+
         public async Task AddCustomerAsync(CustomerModel customerDto) {
-            var customer = new BlazorApp.ApplicationCore.Entities.Customer {
+            var customer = new Customer {
                 CompanyName = customerDto.CompanyName,
                 ContactName = customerDto.ContactName,
                 Address = customerDto.Address,
@@ -30,30 +53,36 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services {
         }
 
         public async Task<PagedResult<CustomerModel>> GetCustomerPaginatedAsync(int page, int pageSize) {
-            var customers = await _unitOfWork.CustomerRepository.ListAllAsync(_ => true);
-            if (customers == null) {
-                throw new ArgumentException(nameof(customers));
-            }
+            var customerQuery = _unitOfWork.CustomerRepository.Find(_ => true);
 
             var result = new PagedResult<CustomerModel> {
                 CurrentPage = page,
                 PageSize = pageSize,
-                RowCount = customers.Count()
+                RowCount = await customerQuery.CountAsync()
             };
+
             var pageCount = (double)result.RowCount / pageSize;
             result.PageCount = (int)Math.Ceiling(pageCount);
             var skip = (page - 1) * pageSize;
-            result.Results = customers.Select(customer => new CustomerModel {
-                Id = customer.Id,
-                CompanyName = customer.CompanyName,
-                ContactName = customer.ContactName,
-                Address = customer.Address,
-                City = customer.City,
-                Region = customer.Region,
-                PostalCode = customer.PostalCode,
-                Country = customer.Country,
-                Phone = customer.Phone
-            }).ToList();
+
+            var customers = await customerQuery
+                                    .Skip(skip)
+                                    .Take(pageSize)
+                                    .ToListAsync();
+
+            result.Results = customers
+                .Select(customer => new CustomerModel {
+                    Id = customer.Id,
+                    CompanyName = customer.CompanyName,
+                    ContactName = customer.ContactName,
+                    Address = customer.Address,
+                    City = customer.City,
+                    Region = customer.Region,
+                    PostalCode = customer.PostalCode,
+                    Country = customer.Country,
+                    Phone = customer.Phone
+                }).ToList()
+                .AsReadOnly();
 
             return result;
         }
