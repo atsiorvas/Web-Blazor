@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.AspNetCore.Components.Routing;
 
 namespace BlazorApp.Pages.Customer {
-    public class CustomerGridBase : ComponentBase {
+    public class CustomerGridBase : ComponentBase, IDisposable {
 
         protected PagedResult<CustomerModel> Customers;
 
@@ -24,16 +26,34 @@ namespace BlazorApp.Pages.Customer {
 
         protected string PageSize { get; set; } = "10";
 
-        //protected override async Task OnInitializedAsync() {
-        //    await LoadCustomers();
-        //}
-
-        protected override async Task OnParametersSetAsync() {
+        protected override async Task OnInitializedAsync() {
+            GetQueryStringValues();
+            UriHelper.LocationChanged += OnLocationChanged;
             await LoadCustomers();
         }
 
+        private void OnLocationChanged(object sender, LocationChangedEventArgs args) {
+
+            InvokeAsync(async () => {
+                await Task.Delay(1);  // wait for blazor to populate route parameters
+                GetQueryStringValues();
+
+                await LoadCustomers();
+                StateHasChanged();
+            });
+        }
+
+        protected void GetQueryStringValues() {
+            var uri = UriHelper.ToAbsoluteUri(UriHelper.Uri);
+            var queryStrings = QueryHelpers.ParseQuery(uri.Query);
+            if (queryStrings.TryGetValue("page", out var page)) {
+                Page = page;
+            }
+        }
+
         protected async Task LoadCustomers() {
-            Customers = await CustomerService.GetCustomerPaginatedAsync(int.Parse(Page ?? "1"), int.Parse(PageSize ?? "10"));
+            Customers = await CustomerService
+                .GetCustomerPaginatedAsync(int.Parse(Page ?? "1"), int.Parse(PageSize ?? "10"));
         }
 
         protected async Task Delete(Guid customerId) {
@@ -53,7 +73,7 @@ namespace BlazorApp.Pages.Customer {
         }
 
         protected void PagerPageChanged(int page) {
-            UriHelper.NavigateTo("/customer/" + page);
+            UriHelper.NavigateTo("/customer?page=" + page);
         }
 
         protected void AddNew() {
@@ -63,6 +83,10 @@ namespace BlazorApp.Pages.Customer {
         protected async Task SelectedPageSizeAsync(ChangeEventArgs e) {
             PageSize = e.Value.ToString();
             await LoadCustomers();
+        }
+
+        public void Dispose() {
+            UriHelper.LocationChanged -= OnLocationChanged;
         }
     }
 }
