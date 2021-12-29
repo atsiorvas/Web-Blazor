@@ -8,68 +8,76 @@
 @if (Customer is null) {
     <p><em>Loading...</em></p>
 } else {
-    <EditForm Model="@Customer" Context="formContext">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-        <div class="row">
-            <div class="col-sm-9">
-                <form class="form form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">CompanyName:</label>
-                        <div class="col-sm-7">
-                            <input type="text" @bind=Customer.CompanyName class="form-control" />
-                        </div>
+    <div class="row">
+        <div class="col-sm-9">
+            <EditForm Model="@Customer" OnSubmit="@HandleValidSubmitAsync">
+                <DataAnnotationsValidator />
+
+                @* <form class="form form-horizontal">*@
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">CompanyName:</label>
+                    <div class="col-sm-7">
+                        <input type="text" @bind=Customer.CompanyName class="form-control" />
+                        <ValidationMessage For="@(()=>Customer.CompanyName)" />
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">ContactName:</label>
-                        <div class="col-sm-7">
-                            <input type="text" @bind=Customer.ContactName class="form-control" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">ContactName:</label>
+                    <div class="col-sm-7">
+                        <input type="text" @bind=Customer.ContactName class="form-control" />
+                        <ValidationMessage For="@(()=>Customer.ContactName)" />
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Address:</label>
-                        <div class="col-sm-7">
-                            <input type="text" @bind=Customer.Address class="form-control" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Address:</label>
+                    <div class="col-sm-7">
+                        <input type="text" @bind=Customer.Address class="form-control" />
+                        <ValidationMessage For="@(()=>Customer.Address)" />
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">City:</label>
-                        <div class="col-sm-7">
-                            <input type="text" @bind=Customer.City class="form-control" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">City:</label>
+                    <div class="col-sm-7">
+                        <input type="text" @bind=Customer.City class="form-control" />
+                        <ValidationMessage For="@(()=>Customer.City)" />
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Region:</label>
-                        <div class="col-sm-7">
-                            <input type="text" @bind=Customer.Region class="form-control" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Region:</label>
+                    <div class="col-sm-7">
+                        <input type="text" @bind=Customer.Region class="form-control" />
+                        <ValidationMessage For="@(()=>Customer.Region)" />
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">PostalCode:</label>
-                        <div class="col-sm-7">
-                            <input type="text" @bind=Customer.PostalCode class="form-control" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">PostalCode:</label>
+                    <div class="col-sm-7">
+                        <input type="text" @bind=Customer.PostalCode class="form-control" />
+                        <ValidationMessage For="@(()=>Customer.PostalCode)" />
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Country:</label>
-                        <div class="col-sm-7">
-                            <input type="text" @bind=Customer.Country class="form-control" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Country:</label>
+                    <div class="col-sm-7">
+                        <input type="text" @bind=Customer.Country class="form-control" />
+                        <ValidationMessage For="@(()=>Customer.Country)" />
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Phone:</label>
-                        <div class="col-sm-7">
-                            <input type="text" @bind=Customer.Phone class="form-control" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Phone:</label>
+                    <div class="col-sm-7">
+                        <input type="text" @bind=Customer.Phone class="form-control" />
+                        <ValidationMessage For="@(()=>Customer.Phone)" />
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"></label>
-                        <div class="col-sm-7">
-                            <button type="button" class="btn btn-primary" @onclick="SaveAsync">Save</button>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-7">
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-                </form>
-            </div>
+                </div>
+                @*</form>*@
+            </EditForm>
         </div>
-    </EditForm>
+    </div>
 }

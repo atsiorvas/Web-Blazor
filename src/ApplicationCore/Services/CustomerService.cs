@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using BlazorApp.ApplicationCore.Entities;
+using System.Threading;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Services {
 
@@ -15,7 +16,7 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> UpdateCustomerAsync(CustomerModel customerModel) {
+        public async Task<bool> UpdateCustomerAsync(CustomerModel customerModel, CancellationToken token = default) {
             if (customerModel == null) {
                 throw new ArgumentNullException(nameof(customerModel));
             }
@@ -32,11 +33,11 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services {
             customerEntity.PostalCode = customerModel.PostalCode;
             customerEntity.Region = customerModel.Region;
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(token);
             return true;
         }
 
-        public async Task AddCustomerAsync(CustomerModel customerDto) {
+        public async Task<Guid> AddCustomerAsync(CustomerModel customerDto, CancellationToken token = default) {
             var customer = new Customer {
                 CompanyName = customerDto.CompanyName,
                 ContactName = customerDto.ContactName,
@@ -49,10 +50,11 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services {
             };
 
             await _unitOfWork.CustomerRepository.AddAsync(customer);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(token);
+            return customer.Id;
         }
 
-        public async Task<PagedResult<CustomerModel>> GetCustomerPaginatedAsync(int page, int pageSize) {
+        public async Task<PagedResult<CustomerModel>> GetCustomerPaginatedAsync(int page, int pageSize, CancellationToken token = default) {
             var customerQuery = _unitOfWork.CustomerRepository.Find(_ => true);
 
             var result = new PagedResult<CustomerModel> {
@@ -87,7 +89,7 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services {
             return result;
         }
 
-        public async Task<CustomerModel> FindCustomerByIdAsync(Guid customerId) {
+        public async Task<CustomerModel> FindCustomerByIdAsync(Guid customerId, CancellationToken token = default) {
             var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(customerId);
             if (customer != null) {
                 return new CustomerModel {
@@ -105,12 +107,12 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services {
             return null;
         }
 
-        public async Task<bool> DeleteCustomerAsync(Guid customerId) {
+        public async Task<bool> DeleteCustomerAsync(Guid customerId, CancellationToken token = default) {
             var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(customerId);
             if (customer is null)
                 return false;
             _unitOfWork.CustomerRepository.Delete(customer);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(token);
             return true;
         }
     }

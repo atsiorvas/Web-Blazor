@@ -1,6 +1,7 @@
 ﻿using BlazorApp.ApplicationCore.Entities;
 using BlazorApp.ApplicationCore.Interfaces;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlazorApp.Infrastructure.Data {
@@ -21,8 +22,8 @@ namespace BlazorApp.Infrastructure.Data {
             }
         }
 
-        public Task SaveChangesAsync() {
-            return _dbContext.SaveChangesAsync();
+        public Task SaveChangesAsync(CancellationToken token = default) {
+            return _dbContext.SaveChangesAsync(token);
         }
 
         private bool disposed = false;

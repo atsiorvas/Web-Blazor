@@ -10,7 +10,6 @@ using Microsoft.eShopWeb.ApplicationCore.Services;
 using BlazorApp.ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace BlazorApp {
@@ -67,8 +66,9 @@ namespace BlazorApp {
                 options.ClientSecret = configuration["IdentityServiceSettings:ClientSecret"];
 
                 // When set to code, the middleware will use PKCE protection
-                options.ResponseType = configuration["IdentityServiceSettings:ResponseType"];
-            
+                options.ResponseType = "code";
+                options.UsePkce = true;
+
                 foreach (var scope in configuration.GetSection("IdentityServiceSettings:Scopes")
                                                         .Get<string[]>())
                     options.Scope.Add(scope);

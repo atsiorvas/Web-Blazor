@@ -1,6 +1,8 @@
 using BlazorApp.ApplicationCore.Interfaces;
 using BlazorApp.ApplicationCore.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
@@ -15,6 +17,9 @@ namespace BlazorApp.Pages.Customer {
 
         [Inject]
         protected NavigationManager UriHelper { get; set; }
+
+        [Inject]
+        protected ILogger<Edit> Logger { get; set; }
 
         [Parameter]
         public Guid Id { get; set; } = Guid.Empty;
@@ -32,9 +37,15 @@ namespace BlazorApp.Pages.Customer {
             }
         }
 
-        protected async Task SaveAsync() {
+        protected async Task HandleValidSubmitAsync(EditContext editContext) {
+            if (editContext == null
+                || !editContext.Validate()) {
+                Logger.LogInformation("HandleSubmit called: Form is INVALID");
+                return;
+            }
+
             if (IsNew) {
-                await CustomerService.AddCustomerAsync(Customer);
+                _ = await CustomerService.AddCustomerAsync(Customer);
                 UriHelper.NavigateTo("/customer/");
                 return;
             }
