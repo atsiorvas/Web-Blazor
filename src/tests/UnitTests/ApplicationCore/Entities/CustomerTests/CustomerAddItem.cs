@@ -1,8 +1,7 @@
 ﻿using BlazorApp.ApplicationCore.Entities;
-using System.Linq;
 using Xunit;
 
-namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Entities.CustomerTests {
+namespace BlazorApp.UnitTests.ApplicationCore.Entities.CustomerTests {
 
     public class CustomerAddItem {
 

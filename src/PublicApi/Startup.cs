@@ -10,6 +10,7 @@ using BlazorApp.ApplicationCore.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
+using System.Collections.Generic;
 
 namespace BlazorApp.PublicApi {
     public class Startup {
@@ -38,25 +39,36 @@ namespace BlazorApp.PublicApi {
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Customer API", Version = "v1" });
+                c.EnableAnnotations();
+                c.SchemaFilter<CustomSchemaFilters>();
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
-                    In = ParameterLocation.Header,
-                    Description = "Please insert JWT with Bearer into field",
+                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
                     Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
                 });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-                   {
-                     new OpenApiSecurityScheme
-                     {
-                       Reference = new OpenApiReference
-                       {
-                         Type = ReferenceType.SecurityScheme,
-                         Id = "Bearer"
-                       }
-                      },
-                      new string[] { }
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                        {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+
+                        },
+                        new List<string>()
                     }
-                  });
+                });
             });
         }
 

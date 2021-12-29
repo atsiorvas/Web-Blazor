@@ -4,9 +4,9 @@ using BlazorApp.ApplicationCore.Interfaces;
 using Moq;
 using Xunit;
 
-namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Services.CustomerServiceTests {
+namespace BlazorApp.UnitTests.ApplicationCore.Services.CustomerServiceTests {
 
-    public class AddItemToBasket {
+    public class AddItem {
         private readonly Mock<IRepository<Customer>> _mockCustomerRepo = new Mock<IRepository<Customer>>();
 
         [Fact]

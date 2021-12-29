@@ -22,7 +22,7 @@ namespace BlazorApp.PublicApi.CustomerEndpoints {
             _customerService = customerService;
         }
 
-        [HttpGet("api/customer/get/{customerId}")]
+        [HttpGet("api/customer/get/{CustomerId}")]
         [Produces("application/json")]
         [SwaggerOperation(
             Summary = "Get a Customer by Id",

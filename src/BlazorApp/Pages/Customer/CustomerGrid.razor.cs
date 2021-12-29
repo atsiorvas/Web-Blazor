@@ -33,7 +33,6 @@ namespace BlazorApp.Pages.Customer {
         }
 
         private void OnLocationChanged(object sender, LocationChangedEventArgs args) {
-
             InvokeAsync(async () => {
                 await Task.Delay(1);  // wait for blazor to populate route parameters
                 GetQueryStringValues();
