@@ -5,12 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BlazorApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.eShopWeb.ApplicationCore.Services;
 using BlazorApp.ApplicationCore.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
+using BlazorApp.ApplicationCore.Services;
 
 namespace BlazorApp.PublicApi {
     public class Startup {

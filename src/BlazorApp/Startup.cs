@@ -6,11 +6,11 @@ using Microsoft.Extensions.Hosting;
 using BlazorApp.Data;
 using BlazorApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.eShopWeb.ApplicationCore.Services;
 using BlazorApp.ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.IdentityModel.Tokens.Jwt;
+using BlazorApp.ApplicationCore.Services;
 
 namespace BlazorApp {
     public class Startup {

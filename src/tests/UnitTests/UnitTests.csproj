@@ -32,10 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationCore\Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\ApplicationCore\ApplicationCore.csproj" />
   </ItemGroup>
 

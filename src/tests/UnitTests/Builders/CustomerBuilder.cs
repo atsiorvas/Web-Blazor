@@ -3,7 +3,6 @@ using Moq;
 using System;
 
 namespace BlazorApp.UnitTests.Builders {
-
     public class CustomerBuilder {
         private Customer _customer;
 
@@ -12,8 +11,6 @@ namespace BlazorApp.UnitTests.Builders {
         public CustomerBuilder() {
             _customer = new Customer();
         }
-
-        public Customer Build() => _customer;
 
         public Customer CreateOneCustomer() {
             var customerMock = new Mock<Customer>();

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using BlazorApp.ApplicationCore.Entities;
 using System.Threading;
 
-namespace Microsoft.eShopWeb.ApplicationCore.Services {
+namespace BlazorApp.ApplicationCore.Services {
 
     public class CustomerService : ICustomerService {
         private readonly IUnitOfWork _unitOfWork;
