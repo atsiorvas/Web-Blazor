@@ -46,11 +46,11 @@ namespace BlazorApp.Pages.Customer {
 
             if (IsNew) {
                 _ = await CustomerService.AddCustomerAsync(Customer);
-                UriHelper.NavigateTo("/customer/");
+                UriHelper.NavigateTo("/customer?page=1");
                 return;
             }
             await CustomerService.UpdateCustomerAsync(Customer);
-            UriHelper.NavigateTo("/customer/");
+            UriHelper.NavigateTo("/customer?page=1");
         }
     }
 }
